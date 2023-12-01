@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01", "01", "{8C29858C-623A-461A-BF0B-254E151CD9C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trebuchet", "01\Trebuchet\Trebuchet.csproj", "{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trebuchet.Tests", "01\Trebuchet.Tests\Trebuchet.Tests.csproj", "{4A5226E4-5B90-4D6C-9224-EBE3F04470ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5226E4-5B90-4D6C-9224-EBE3F04470ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5226E4-5B90-4D6C-9224-EBE3F04470ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5226E4-5B90-4D6C-9224-EBE3F04470ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5226E4-5B90-4D6C-9224-EBE3F04470ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3F8EAC09-4BC7-43AA-B72B-48DDD2710F6D} = {8C29858C-623A-461A-BF0B-254E151CD9C2}
+		{4A5226E4-5B90-4D6C-9224-EBE3F04470ED} = {8C29858C-623A-461A-BF0B-254E151CD9C2}
+	EndGlobalSection
+EndGlobal
