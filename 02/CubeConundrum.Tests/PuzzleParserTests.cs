@@ -24,71 +24,70 @@ public class PuzzleParserTests
     var result = _sut.ParseGame(input);
     result.Should().BeEquivalentTo(expected);
   }
-}
 
-public static class TestData
-{
-  public static readonly IEnumerable<object[]> CubeStrings = new List<object[]>
+  public static class TestData
   {
-    new object[] { "4 red", new Cube { Count = 4, Color = CubeColor.Red } },
-    new object[] { "1 green", new Cube { Count = 1, Color = CubeColor.Green } },
-    new object[] { "2 blue", new Cube { Count = 2, Color = CubeColor.Blue } }
-  };
-
-  public static readonly IEnumerable<object[]> ResultStrings = new List<object[]>
-  {
-    new object[]
+    public static readonly IEnumerable<object[]> CubeStrings = new List<object[]>
     {
-      "4 red, 1 green, 2 blue",
-      new Result
-      {
-        Cubes =
-        [
-          new (){ Count = 4, Color = CubeColor.Red },
-          new (){ Count = 1, Color = CubeColor.Green },
-          new() { Count = 2, Color = CubeColor.Blue }
-        ]
-      }
-    }
-  };
+      new object[] { "4 red", new Cube { Count = 4, Color = CubeColor.Red } },
+      new object[] { "1 green", new Cube { Count = 1, Color = CubeColor.Green } },
+      new object[] { "2 blue", new Cube { Count = 2, Color = CubeColor.Blue } }
+    };
 
-  public static readonly IEnumerable<object[]> GameStrings = new List<object[]>
-  {
-    new object[]
+    public static readonly IEnumerable<object[]> ResultStrings = new List<object[]>
     {
-      "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
-      new Game
+      new object[]
       {
-        Id = 1,
-        Results =
-        [
-          new()
-          {
-            Cubes =
-            [
-              new() { Count = 3, Color = CubeColor.Blue },
-              new() { Count = 4, Color = CubeColor.Red }
-            ]
-          },
-          new Result
-          {
-            Cubes =
-            [
-              new() { Count = 1, Color = CubeColor.Red },
-              new() { Count = 2, Color = CubeColor.Green },
-              new() { Count = 6, Color = CubeColor.Blue }
-            ]
-          },
-          new Result
-          {
-            Cubes =
-            [
-              new(){ Count = 2, Color = CubeColor.Green }
-            ]
-          }
-        ]
+        "4 red, 1 green, 2 blue",
+        new Result
+        {
+          Cubes =
+          [
+            new (){ Count = 4, Color = CubeColor.Red },
+            new (){ Count = 1, Color = CubeColor.Green },
+            new() { Count = 2, Color = CubeColor.Blue }
+          ]
+        }
       }
-    }
-  };
+    };
 
+    public static readonly IEnumerable<object[]> GameStrings = new List<object[]>
+    {
+      new object[]
+      {
+        "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
+        new Game
+        {
+          Id = 1,
+          Results =
+          [
+            new()
+            {
+              Cubes =
+              [
+                new() { Count = 3, Color = CubeColor.Blue },
+                new() { Count = 4, Color = CubeColor.Red }
+              ]
+            },
+            new Result
+            {
+              Cubes =
+              [
+                new() { Count = 1, Color = CubeColor.Red },
+                new() { Count = 2, Color = CubeColor.Green },
+                new() { Count = 6, Color = CubeColor.Blue }
+              ]
+            },
+            new Result
+            {
+              Cubes =
+              [
+                new(){ Count = 2, Color = CubeColor.Green }
+              ]
+            }
+          ]
+        }
+      }
+    };
+  }
 }
