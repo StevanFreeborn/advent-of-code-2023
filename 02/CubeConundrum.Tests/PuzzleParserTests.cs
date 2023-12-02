@@ -5,7 +5,7 @@ public class PuzzleParserTests
   private readonly PuzzleParser _sut = new();
 
   [Theory, MemberData(nameof(TestData.CubeStrings), MemberType = typeof(TestData))]
-  public void ParseCube_GivenAStringThatRepresentsACube_ItShouldReturnTheEquivalentCubeModel(string input, Cube expected)
+  public void ParseCube_GivenAStringThatRepresentsACube_ItShouldReturnTheEquivalentCubeModel(string input, CubeCollection expected)
   {
     var result = _sut.ParseCube(input);
     result.Should().BeEquivalentTo(expected);
@@ -29,9 +29,9 @@ public class PuzzleParserTests
   {
     public static readonly IEnumerable<object[]> CubeStrings = new List<object[]>
     {
-      new object[] { "4 red", new Cube { Count = 4, Color = CubeColor.Red } },
-      new object[] { "1 green", new Cube { Count = 1, Color = CubeColor.Green } },
-      new object[] { "2 blue", new Cube { Count = 2, Color = CubeColor.Blue } }
+      new object[] { "4 red", new CubeCollection { Count = 4, Color = CubeColor.Red } },
+      new object[] { "1 green", new CubeCollection { Count = 1, Color = CubeColor.Green } },
+      new object[] { "2 blue", new CubeCollection { Count = 2, Color = CubeColor.Blue } }
     };
 
     public static readonly IEnumerable<object[]> ResultStrings = new List<object[]>

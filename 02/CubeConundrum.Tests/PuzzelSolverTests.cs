@@ -1,8 +1,8 @@
 namespace CubeConundrum.Tests;
 
-public class PartOnePuzzleSolverTests
+public class PuzzleSolverTests
 {
-  private readonly PartOnePuzzleSolver _sut = new();
+  private readonly PuzzleSolver _sut = new();
 
   [Theory, MemberData(nameof(TestData.Results), MemberType = typeof(TestData))]
   public void IsResultPossible_GivenAResult_ItShouldReturnExpectedOutcome(Result givenResult, bool expected)
