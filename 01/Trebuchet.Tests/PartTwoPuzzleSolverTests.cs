@@ -36,6 +36,6 @@ public class PartTwoPuzzleSolverTests
   {
     var input = await File.ReadAllLinesAsync("INPUT.txt");
     var result = _sut.SumCalibrationValues(input);
-    result.Should().BeLessThan(54249);
+    result.Should().Be(54249);
   }
 }
