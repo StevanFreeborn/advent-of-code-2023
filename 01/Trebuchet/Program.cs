@@ -31,12 +31,30 @@ public class Program
   }
 }
 
+/// <summary>
+/// Interface for puzzle solvers.
+/// </summary>
 public interface IPuzzleSolver
 {
+  /// <summary>
+  /// Sums all calibration values.
+  /// </summary>
+  /// <param name="lines">The lines of the input file.</param>
+  /// <returns>The sum of all calibration values.</returns>
   public int SumCalibrationValues(string[] lines);
+
+  /// <summary>
+  /// Gets the calibration value for a given line.
+  /// </summary>
+  /// <param name="line">The line to get the calibration value for.</param>
+  /// <returns>The calibration value for the given line.</returns>
   public int GetCalibrationValue(string line);
 }
 
+/// <summary>
+/// Puzzle solver for part one.
+/// </summary>
+/// <inheritdoc cref="IPuzzleSolver"/>
 public class PartOnePuzzleSolver : IPuzzleSolver
 {
   public int SumCalibrationValues(string[] lines) => lines.Sum(GetCalibrationValue);
@@ -60,6 +78,10 @@ public class PartOnePuzzleSolver : IPuzzleSolver
   }
 }
 
+/// <summary>
+/// Puzzle solver for part two.
+/// </summary>
+/// <inheritdoc cref="IPuzzleSolver"/>
 public class PartTwoPuzzleSolver : IPuzzleSolver
 {
   private readonly Dictionary<string, string> _validDigitsAsWords = new() {
