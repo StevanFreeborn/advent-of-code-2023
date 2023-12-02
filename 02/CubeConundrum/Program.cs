@@ -10,7 +10,21 @@ public class Program
 
 public class PartOnePuzzleSolver
 {
+  private readonly int _maxCubeCount = 39;
+  private readonly int _maxRedCubeCount = 12;
+  private readonly int _maxGreenCubeCount = 13;
+  private readonly int _maxBlueCubeCount = 14;
 
+  public bool IsResultPossible(Result result) => result.TotalCubeCount <= _maxCubeCount
+    && result.RedCubeCount <= _maxRedCubeCount
+    && result.GreenCubeCount <= _maxGreenCubeCount
+    && result.BlueCubeCount <= _maxBlueCubeCount;
+
+  public bool IsGamePossible(Game game) => game.Results.All(IsResultPossible);
+
+  public int SumPossibleGameIds(IEnumerable<Game> games) => games
+    .Where(IsGamePossible)
+    .Sum(g => g.Id);
 }
 
 public class PuzzleParser
@@ -69,6 +83,10 @@ public class Game
 public class Result
 {
   public List<Cube> Cubes { get; set; } = [];
+  public int TotalCubeCount => Cubes.Sum(c => c.Count);
+  public int RedCubeCount => Cubes.Where(c => c.Color == CubeColor.Red).Sum(c => c.Count);
+  public int GreenCubeCount => Cubes.Where(c => c.Color == CubeColor.Green).Sum(c => c.Count);
+  public int BlueCubeCount => Cubes.Where(c => c.Color == CubeColor.Blue).Sum(c => c.Count);
 }
 
 public class Cube
