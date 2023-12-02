@@ -4,7 +4,28 @@ public class Program
 {
   public async static Task<int> Main(string[] args)
   {
-    return await Task.FromResult(0);
+    if (args.Length is 0)
+    {
+      Console.WriteLine("Please provide a path to the input file.");
+      return 1;
+    }
+
+    if (File.Exists(args[0]) is false)
+    {
+      Console.WriteLine("The provided file does not exist.");
+      return 2;
+    }
+
+    var puzzleParser = new PuzzleParser();
+    var puzzleSolver = new PartOnePuzzleSolver();
+
+    var input = await File.ReadAllLinesAsync(args[0]);
+    var games = input.Select(puzzleParser.ParseGame);
+    var result = puzzleSolver.SumPossibleGameIds(games);
+
+    Console.WriteLine($"The sum of all possible game ids is {result}.");
+
+    return result;
   }
 }
 
