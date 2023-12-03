@@ -33,7 +33,7 @@ dotnet run -- <path-to-input-file>
 | --- | -------------------------- | :-----------------------------: | :----: | ------------------------------------------------------------------- |
 | 01  | [Problem](./01/PROBLEM.md) |   [Solution](./01/Trebuchet/)   |   ✅   | The trickiest part here was accounting for overlapping digit words. |
 | 02  | [Problem](./02/PROBLEM.md) | [Solution](./02/CubeConundrum/) |   ✅   | The key to me here was to parse the input into a useful model.      |
-| 03  | [Problem](./03/PROBLEM.md) |        [Solution](./03/)        |   ⌛   |
+| 03  | [Problem](./03/PROBLEM.md) |  [Solution](./03/GearRatios/)   |   ⌛   |
 | 04  | [Problem](./04/PROBLEM.md) |        [Solution](./04/)        |   ⌛   |
 | 05  | [Problem](./05/PROBLEM.md) |        [Solution](./05/)        |   ⌛   |
 | 06  | [Problem](./06/PROBLEM.md) |        [Solution](./06/)        |   ⌛   |
