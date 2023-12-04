@@ -36,6 +36,8 @@ public class PuzzleSolverTests
       ".664.598..",
     ];
 
+    private static readonly string[] Input = File.ReadAllLines("INPUT.txt");
+
     public static IEnumerable<object[]> SumGearRatios =>
       new List<object[]>
       {
@@ -44,6 +46,11 @@ public class PuzzleSolverTests
           TestSchematic,
           467835,
         },
+        new object[]
+        {
+          Input,
+          81997870,
+        }
       };
 
     public static IEnumerable<object?[]> SumPartNumbersData =>
@@ -84,6 +91,11 @@ public class PuzzleSolverTests
             "........375...%.........*......450.456.$.........714........851.327..#...+......*...+.......179.630....854.................................*",
           },
           11612
+        },
+        new object[]
+        {
+          Input,
+          550934,
         }
       };
   }

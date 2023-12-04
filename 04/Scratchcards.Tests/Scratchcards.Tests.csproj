@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GearRatios\GearRatios.csproj" />
+    <ProjectReference Include="..\Scratchcards\Scratchcards.csproj" />
   </ItemGroup>
 
   <ItemGroup>
