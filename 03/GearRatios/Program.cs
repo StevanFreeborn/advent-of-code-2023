@@ -36,8 +36,16 @@ public class Program
   }
 }
 
+/// <summary>
+/// Solves the puzzle.
+/// </summary>
 public class PuzzleSolver
 {
+  /// <summary>
+  /// Sums all part numbers in the schematic.
+  /// </summary>
+  /// <param name="schematic">The schematic to parse.</param>
+  /// <returns>The sum of all part numbers.</returns>
   public int SumPartNumbers(string[] schematic)
   {
     var allPartNumbers = new List<int>();
@@ -54,6 +62,11 @@ public class PuzzleSolver
     return allPartNumbers.Sum();
   }
 
+  /// <summary>
+  /// Sums all gear ratios in the schematic.
+  /// </summary>
+  /// <param name="schematic">The schematic to parse.</param>
+  /// <returns>The sum of all gear ratios.</returns>
   public int SumGearRatios(string[] schematic)
   {
     var allGearRatios = new List<int>();
@@ -71,17 +84,40 @@ public class PuzzleSolver
   }
 }
 
+/// <summary>
+/// Represents a line in the schematic.
+/// </summary>
+/// <param name="numbers">The numbers in the line.</param>
+/// <param name="specialCharacters">The special characters in the line.</param>
+/// <returns>A line in the schematic.</returns>
 public class Line(
   List<Dictionary<int, Indexes>> numbers,
   List<Dictionary<string, Indexes>> specialCharacters
 )
 {
+  /// <summary>
+  /// Gets the numbers in the line.
+  /// </summary>
   public List<Dictionary<int, Indexes>> Numbers { get; init; } = numbers;
+
+  /// <summary>
+  /// Gets the special characters in the line.
+  /// </summary>
   public List<Dictionary<string, Indexes>> SpecialCharacters { get; init; } = specialCharacters;
+
+  /// <summary>
+  /// Gets the indexes of all special characters in the line.
+  /// </summary>
   public List<int> SpecialCharacterIndexes => SpecialCharacters.SelectMany(dict => dict.Values).Select(v => v.Start).ToList();
 
   private bool IsGearCharacter(string character) => character == "*";
 
+  /// <summary>
+  /// Gets the gear ratios in the line.
+  /// </summary>
+  /// <param name="previousLine">The previous line in the schematic.</param>
+  /// <param name="nextLine">The next line in the schematic.</param>
+  /// <returns>A list of gear ratios.</returns>
   public List<int> GetGearRatios(Line? previousLine = null, Line? nextLine = null)
   {
     var gearRatios = new List<int>();
@@ -125,6 +161,12 @@ public class Line(
     return gearRatios;
   }
 
+  /// <summary>
+  /// Gets the part numbers in the line.
+  /// </summary>
+  /// <param name="previousLine">The previous line in the schematic.</param>
+  /// <param name="nextLine">The next line in the schematic.</param>
+  /// <returns>A list of part numbers.</returns>
   public List<int> GetPartNumbers(Line? previousLine = null, Line? nextLine = null)
   {
     var partNumbers = new List<int>();
@@ -156,6 +198,11 @@ public class Line(
     return partNumbers;
   }
 
+  /// <summary>
+  /// Parses a line in the schematic.
+  /// </summary>
+  /// <param name="line">The line to parse.</param>
+  /// <returns>An instance of <see cref="Line"/>.</returns>
   public static Line Parse(string line)
   {
     var numbers = new List<Dictionary<int, Indexes>>();
@@ -221,8 +268,18 @@ public class Line(
   }
 }
 
+/// <summary>
+/// Represents the start and end indexes of a number or special character.
+/// </summary>
 public class Indexes(int start, int end)
 {
+  /// <summary>
+  /// Gets the start index. The start index is the position of the first character in the number or special character.
+  /// </summary>
   public int Start { get; init; } = start;
+
+  /// <summary>
+  /// Gets the end index. The end index is the position of the last character in the number or special character.
+  /// </summary>
   public int End { get; init; } = end;
 }

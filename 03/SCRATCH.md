@@ -82,9 +82,14 @@ public class Indexes
 Then you see if those numbers are part numbers just by checking if a special character proceeds or follows their start and end indexes.
 
 ```csharp
+
 ```
 
 If not then you need to see if there is a previous line and whether there is a special character at on the previous line that has an index that is between 1 less than the start index and 1 more than the end index.
 
 If not then you need to see if there is a next line and whether there is a special character at on the next line that has an index that is between 1 less than the start index and 1 more than the end index.
-```
+
+Basic approach:
+
+- Parse the current, previous, and next lines into a model that keeps track of the numbers and special characters and their indexes for that line.
+- Then each line should be able to evaluate what is a part number or not. Or what is a gear or not given its previous and next lines.
