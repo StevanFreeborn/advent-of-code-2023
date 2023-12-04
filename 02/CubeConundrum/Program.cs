@@ -26,7 +26,14 @@ public class Program
       ? puzzleSolver.SumGameMinimumPowers(games)
       : puzzleSolver.SumPossibleGameIds(games);
 
-    Console.WriteLine($"The sum of all possible game ids is {result}.");
+    if (args.Length > 1 && args[1] == "part2")
+    {
+      Console.WriteLine($"The sum of the minimum powers of all games is {result}.");
+    }
+    else
+    {
+      Console.WriteLine($"The sum of all possible game ids is {result}.");
+    }
 
     return result;
   }
