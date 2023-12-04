@@ -9,16 +9,16 @@ public class Program
     if (args.Length is 0)
     {
       Console.WriteLine("Please provide a path to the input file.");
-      return 1;
+      return -1;
     }
 
     if (File.Exists(args[0]) is false)
     {
       Console.WriteLine("The provided file does not exist.");
-      return 2;
+      return -2;
     }
 
-    IPuzzleSolver puzzleSolver = args.Length > 1 && args[1] == "2"
+    IPuzzleSolver puzzleSolver = args.Length > 1 && args[1] == "part2"
       ? new PartTwoPuzzleSolver()
       : new PartOnePuzzleSolver();
 
@@ -27,7 +27,7 @@ public class Program
 
     Console.WriteLine($"The sum of all calibration values is {result}.");
 
-    return 0;
+    return result;
   }
 }
 
