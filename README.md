@@ -40,7 +40,7 @@ dotnet run -- <path-to-input-file> part2
 | 01  | [Problem](./01/PROBLEM.md) |   [Solution](./01/Trebuchet/)   |   ✅   | The trickiest part here was accounting for overlapping digit words. |
 | 02  | [Problem](./02/PROBLEM.md) | [Solution](./02/CubeConundrum/) |   ✅   | The key to me here was to parse the input into a useful model.      |
 | 03  | [Problem](./03/PROBLEM.md) |  [Solution](./03/GearRatios/)   |   ✅   | The edge case that got me here was lines ending with a part number. |
-| 04  | [Problem](./04/PROBLEM.md) |        [Solution](./04/)        |   ⌛   |
+| 04  | [Problem](./04/PROBLEM.md) | [Solution](./04/Scratchcards/)  |   ⌛   |
 | 05  | [Problem](./05/PROBLEM.md) |        [Solution](./05/)        |   ⌛   |
 | 06  | [Problem](./06/PROBLEM.md) |        [Solution](./06/)        |   ⌛   |
 | 07  | [Problem](./07/PROBLEM.md) |        [Solution](./07/)        |   ⌛   |
