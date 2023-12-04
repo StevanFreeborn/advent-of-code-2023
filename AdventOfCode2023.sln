@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03", "03", "{EA04152D-316A-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearRatios", "03\GearRatios\GearRatios.csproj", "{F697AC19-C92D-4E2A-975A-1A16A1961133}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearRatios.Test", "03\GearRatios.Test\GearRatios.Test.csproj", "{FEE9253C-A56B-4735-BDB3-C62220C5B1B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearRatios.Tests", "03\GearRatios.Tests\GearRatios.Tests.csproj", "{FEE9253C-A56B-4735-BDB3-C62220C5B1B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
