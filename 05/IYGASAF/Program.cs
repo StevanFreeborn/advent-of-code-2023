@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿namespace IYGASAF;
+
+public class Program
+{
+  public static async Task<int> Main(string[] args)
+  {
+    return await Task.FromResult(0);
+  }
+}
