@@ -33,6 +33,13 @@ Or for part 2 solutions
 dotnet run -- <path-to-input-file> part2
 ```
 
+You can also build the projects and run the executables directly.
+
+```bash
+dotnet build
+./bin/Debug/net8.0/<project-name> <path-to-input-file>
+```
+
 ## Challenges
 
 | Day | Problem                    |            Solution             | Status | Notes                                                               |
