@@ -2,8 +2,6 @@ namespace IYGASAF.Tests;
 
 public class AlmanacTests
 {
-  private readonly Almanac _sut = TestData.TestAlmanac;
-
   [Theory]
   [MemberData(nameof(TestData.TestAlmanacData), MemberType = typeof(TestData))]
   public void Parse_WhenGivenValidAlmanac_ItShouldReturnExpectedAlmanac(string[] almanac, Almanac expected)
@@ -19,15 +17,25 @@ public class AlmanacTests
   [InlineData(13, 35)]
   public void GetSeedLocation_WhenGivenValidSeed_ItShouldReturnExpectedLocation(int seed, int expected)
   {
-    var result = _sut.GetSeedLocation(seed);
+    var sut = TestData.TestAlmanac;
+    var result = sut.GetSeedLocation(seed);
     result.Should().Be(expected);
   }
 
   [Fact]
   public void GetLowestSeedLocation_WhenCalled_ItShouldReturnExpectedLocation()
   {
-    var result = _sut.GetLowestSeedLocation();
+    var sut = TestData.TestAlmanac;
+    var result = sut.GetLowestSeedLocation();
     result.Should().Be(35);
+  }
+
+  [Fact]
+  public void GetLowestSeedLocation_WhenCalledAndSeedsAreParsedAsRanges_ItShouldReturnExpectedLocation()
+  {
+    var sut = Almanac.Parse(TestData.TestAlmanacInput);
+    var result = sut.GetLowestSeedLocation(true);
+    result.Should().Be(46);
   }
 
   [Fact]
@@ -39,6 +47,19 @@ public class AlmanacTests
     result.Should().Be(806029445);
   }
 
+  [Fact]
+  public void ParseSeedsAsRanges_WhenGivenValidSeedsString_ItShouldReturnExpectedSeeds()
+  {
+    var seedsString = "79 14 55 13";
+    var expected = new List<SeedRange>
+    {
+      new(79, 14),
+      new(55, 13),
+    };
+    var result = Almanac.ParseSeedsAsRanges(seedsString);
+    result.Should().BeEquivalentTo(expected);
+  }
+
   public static class TestData
   {
     public static readonly Almanac TestAlmanac =
@@ -48,6 +69,10 @@ public class AlmanacTests
           14,
           55,
           13,
+        ],
+        [
+          new(79, 14),
+          new(55, 13),
         ],
         [
           new(
@@ -98,6 +123,36 @@ public class AlmanacTests
           ),
         ]
       );
+
+    public static readonly string[] TestAlmanacInput =
+      [
+        "seeds: 79 14 55 13",
+        "seed-to-soil map:",
+        "50 98 2",
+        "52 50 48",
+        "soil-to-fertilizer map:",
+        "0 15 37",
+        "37 52 2",
+        "39 0 15",
+        "fertilizer-to-water map:",
+        "49 53 8",
+        "0 11 42",
+        "42 0 7",
+        "57 7 4",
+        "water-to-light map:",
+        "88 18 7",
+        "18 25 70",
+        "light-to-temperature map:",
+        "45 77 23",
+        "81 45 19",
+        "68 64 13",
+        "temperature-to-humidity map:",
+        "0 69 1",
+        "1 0 69",
+        "humidity-to-location map:",
+        "60 56 37",
+        "56 93 4",
+      ];
 
     public static readonly IEnumerable<object[]> TestAlmanacData =
       new List<object[]>
