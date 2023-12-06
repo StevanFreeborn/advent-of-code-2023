@@ -1,4 +1,6 @@
-﻿namespace IYGASAF;
+﻿using System.Diagnostics;
+
+namespace IYGASAF;
 
 public class Program
 {
@@ -24,9 +26,14 @@ public class Program
     var almanac = Almanac.Parse(input);
 
     Console.WriteLine("Getting lowest seed location...");
-    var result = almanac.GetLowestSeedLocation(seedsAreRanges);
 
-    Console.WriteLine($"The lowest seed location is {result}.");
+    var stopwatch = new Stopwatch();
+    stopwatch.Start();
+    var result = almanac.GetLowestSeedLocation(seedsAreRanges);
+    stopwatch.Stop();
+
+
+    Console.WriteLine($"The lowest seed location is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
 
     return (int)result;
   }
