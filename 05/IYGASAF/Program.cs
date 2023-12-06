@@ -32,14 +32,32 @@ public class Program
   }
 }
 
+/// <summary>
+/// Represents an almanac.
+/// </summary>
+/// <param name="seeds">The seeds.</param>
+/// <param name="seedRanges">The seed ranges.</param>
+/// <param name="maps">The maps.</param>
+/// <returns>An instance of <see cref="Almanac"/>.</returns>
 public class Almanac(
   List<long> seeds,
   List<SeedRange> seedRanges,
   List<Map> maps
 )
 {
+  /// <summary>
+  /// Gets the seed ranges.
+  /// </summary>
   public List<SeedRange> SeedRanges { get; init; } = seedRanges;
+
+  /// <summary>
+  /// Gets the seeds.
+  /// </summary>
   public List<long> Seeds { get; init; } = seeds;
+
+  /// <summary>
+  /// Gets the maps.
+  /// </summary>
   public List<Map> Maps { get; init; } = maps;
 
   private static List<long> GetSeedsFromString(string seedsString) =>
@@ -51,16 +69,26 @@ public class Almanac(
     .Select(long.Parse)
     .ToList();
 
+  /// <summary>
+  /// Gets the seed location.
+  /// </summary>
+  /// <param name="seed">The seed.</param>
+  /// <returns>The seed location.</returns>
   public long GetSeedLocation(long seed) => Maps.Aggregate(
     seed,
     (currentSeed, map) => map.ConvertSourceToDestination(currentSeed)
   );
 
-  public class LocationResult
+  private class LocationResult
   {
     public long Value { get; set; } = long.MaxValue;
   }
 
+  /// <summary>
+  /// Gets the lowest seed location.
+  /// </summary>
+  /// <param name="seedsAreRanges">If set to true seeds are treated as ranges</param>
+  /// <returns>The lowest seed location.</returns>
   public long GetLowestSeedLocation(bool seedsAreRanges = false)
   {
     var lowestLocation = new LocationResult();
@@ -101,11 +129,14 @@ public class Almanac(
       }
     }
 
-    File.WriteAllText("output.txt", lowestLocation.Value.ToString());
-
     return lowestLocation.Value;
   }
 
+  /// <summary>
+  /// Parses the seeds as ranges.
+  /// </summary>
+  /// <param name="seedsString">The seeds string.</param>
+  /// <returns>The seeds as ranges.</returns>
   public static List<SeedRange> ParseSeedsAsRanges(string seedsString)
   {
     var seeds = new List<SeedRange>();
@@ -122,6 +153,11 @@ public class Almanac(
     return seeds;
   }
 
+  /// <summary>
+  /// Parses the specified almanac.
+  /// </summary>
+  /// <param name="almanac">The almanac.</param>
+  /// <returns>An instance of <see cref="Almanac"/>.</returns> 
   public static Almanac Parse(string[] almanac)
   {
     var seedsString = almanac[0].Split(':')[1];
@@ -166,22 +202,45 @@ public class Almanac(
   }
 }
 
+/// <summary>
+/// Represents a map.
+/// </summary>
+/// <param name="ranges">The ranges contained within the map</param>
+/// <returns>An instance of <see cref="Map"/>.</returns>
 public class Map(
   List<Range> ranges
 )
 {
+  /// <summary>
+  /// Gets the ranges.
+  /// </summary>
   public List<Range> Ranges { get; init; } = [.. ranges.OrderBy(range => range.SourceStart)];
 
+  /// <summary>
+  /// Parses a map from the specified ranges.
+  /// </summary>
+  /// <param name="ranges">The ranges.</param>
+  /// <returns>An instance of <see cref="Map"/>.</returns>
   public static Map Parse(string[] ranges) =>
     new(
       ranges.Select(Range.Parse).ToList()
     );
 
+  /// <summary>
+  /// Gets the source range.
+  /// </summary>
+  /// <param name="sourceValue">The source value.</param>
+  /// <returns>The source <see cref="Range"/>.</returns>
   public Range? GetSourceRange(long sourceValue) =>
     Ranges
       .Where(range => range.SourceStart <= sourceValue && range.SourceEnd >= sourceValue)
       .FirstOrDefault();
 
+  /// <summary>
+  /// Converts the source to destination.
+  /// </summary>
+  /// <param name="valueToConvert">The value to convert.</param>
+  /// <returns>The converted value.</returns>
   public long ConvertSourceToDestination(long valueToConvert)
   {
     var sourceRange = GetSourceRange(valueToConvert);
@@ -199,28 +258,77 @@ public class Map(
   }
 }
 
+/// <summary>
+/// Represents a seed range.
+/// </summary>
+/// <param name="start">The start.</param>
+/// <param name="length">The length.</param>
+/// <returns>An instance of <see cref="SeedRange"/>.</returns>
 public class SeedRange(
   long start,
   long length
 )
 {
+  /// <summary>
+  /// Gets the start of the range. It is inclusive.
+  /// </summary>
   public long Start { get; init; } = start;
+
+  /// <summary>
+  /// Gets the length of the range.
+  /// </summary>
   public long Length { get; init; } = length;
+
+  /// <summary>
+  /// Gets the end of the range. It is inclusive.
+  /// </summary>
   public long End => Start + Length - 1;
 }
 
+/// <summary>
+/// Represents a map range.
+/// </summary>
+/// <param name="rangeLength">Length of the range.</param>
+/// <param name="sourceStart">The source start.</param>
+/// <param name="destinationStart">The destination start.</param>
+/// <returns>An instance of <see cref="Range"/>.</returns>
 public class Range(
   long rangeLength,
   long sourceStart,
   long destinationStart
 )
 {
+  /// <summary>
+  /// Gets the length of the range.
+  /// </summary>
   public long RangeLength { get; init; } = rangeLength;
+
+  /// <summary>
+  /// Gets the start of the source range. It is inclusive.
+  /// </summary>
   public long SourceStart { get; init; } = sourceStart;
+
+  /// <summary>
+  /// Gets the end of the source range. It is inclusive.
+  /// </summary>
   public long SourceEnd => SourceStart + RangeLength - 1;
+
+  /// <summary>
+  /// Gets the start of the destination range. It is inclusive.
+  /// </summary>
   public long DestinationStart { get; init; } = destinationStart;
+
+  /// <summary>
+  /// Gets the end of the destination range. It is inclusive.
+  /// </summary>
   public long DestinationEnd => DestinationStart + RangeLength - 1;
 
+  /// <summary>
+  /// Parses the specified range.
+  /// </summary>
+  /// <param name="range">The range.</param>
+  /// <returns>An instance of <see cref="Range"/>.</returns>
+  /// <exception cref="ArgumentException">Range must be in the format of 'DestinationRangeStart:long SourceRangeStart:long RangeLength:long'</exception>
   public static Range Parse(string range)
   {
     var parts = range.Split(
