@@ -18,7 +18,13 @@ public class Program
 
 
     var input = await File.ReadAllLinesAsync(args[0]);
-    var result = Almanac.Parse(input).GetLowestSeedLocation();
+    var seedsAreRanges = args.Length > 1 && args[1] == "part2";
+
+    Console.WriteLine("Parsing almanac...");
+    var almanac = Almanac.Parse(input);
+
+    Console.WriteLine("Getting lowest seed location...");
+    var result = almanac.GetLowestSeedLocation(seedsAreRanges);
 
     Console.WriteLine($"The lowest seed location is {result}.");
 
@@ -28,31 +34,99 @@ public class Program
 
 public class Almanac(
   List<long> seeds,
+  List<SeedRange> seedRanges,
   List<Map> maps
 )
 {
+  public List<SeedRange> SeedRanges { get; init; } = seedRanges;
   public List<long> Seeds { get; init; } = seeds;
   public List<Map> Maps { get; init; } = maps;
+
+  private static List<long> GetSeedsFromString(string seedsString) =>
+  seedsString
+    .Split(
+      ' ',
+      StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+    )
+    .Select(long.Parse)
+    .ToList();
 
   public long GetSeedLocation(long seed) => Maps.Aggregate(
     seed,
     (currentSeed, map) => map.ConvertSourceToDestination(currentSeed)
   );
 
-  public long GetLowestSeedLocation() => Seeds
-    .Select(GetSeedLocation)
-    .Min();
+  public class LocationResult
+  {
+    public long Value { get; set; } = long.MaxValue;
+  }
+
+  public long GetLowestSeedLocation(bool seedsAreRanges = false)
+  {
+    var lowestLocation = new LocationResult();
+
+    if (seedsAreRanges)
+    {
+      Parallel.ForEach(SeedRanges, (currentSeedRange) =>
+      {
+        var currentSeedRangeStart = currentSeedRange.Start;
+        var currentSeedRangeEnd = currentSeedRange.End;
+
+        for (long j = currentSeedRangeStart; j <= currentSeedRangeEnd; j++)
+        {
+          var currentSeed = j;
+          var currentSeedLocation = GetSeedLocation(currentSeed);
+
+          lock (lowestLocation)
+          {
+            if (currentSeedLocation < lowestLocation.Value)
+            {
+              lowestLocation.Value = currentSeedLocation;
+            }
+          }
+        }
+      });
+    }
+    else
+    {
+      for (int i = 0; i < Seeds.Count; i++)
+      {
+        var currentSeed = Seeds[i];
+        var currentSeedLocation = GetSeedLocation(currentSeed);
+
+        if (currentSeedLocation < lowestLocation.Value)
+        {
+          lowestLocation.Value = currentSeedLocation;
+        }
+      }
+    }
+
+    File.WriteAllText("output.txt", lowestLocation.Value.ToString());
+
+    return lowestLocation.Value;
+  }
+
+  public static List<SeedRange> ParseSeedsAsRanges(string seedsString)
+  {
+    var seeds = new List<SeedRange>();
+    var seedNumbers = GetSeedsFromString(seedsString);
+
+    for (int i = 0; i < seedNumbers.Count; i += 2)
+    {
+      var start = seedNumbers[i];
+      var length = seedNumbers[i + 1];
+
+      seeds.Add(new(start, length));
+    }
+
+    return seeds;
+  }
 
   public static Almanac Parse(string[] almanac)
   {
     var seedsString = almanac[0].Split(':')[1];
-    var seeds = seedsString
-      .Split(
-        ' ',
-        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
-      )
-      .Select(long.Parse)
-      .ToList();
+    var seeds = GetSeedsFromString(seedsString);
+    var seedRanges = ParseSeedsAsRanges(seedsString);
 
     var maps = new List<Map>();
     var ranges = new List<string>();
@@ -86,6 +160,7 @@ public class Almanac(
 
     return new Almanac(
       seeds,
+      seedRanges,
       maps
     );
   }
@@ -95,7 +170,7 @@ public class Map(
   List<Range> ranges
 )
 {
-  public List<Range> Ranges { get; init; } = ranges;
+  public List<Range> Ranges { get; init; } = [.. ranges.OrderBy(range => range.SourceStart)];
 
   public static Map Parse(string[] ranges) =>
     new(
@@ -122,6 +197,16 @@ public class Map(
       ? valueToConvert - sourceToDestinationOffset
       : valueToConvert + sourceToDestinationOffset;
   }
+}
+
+public class SeedRange(
+  long start,
+  long length
+)
+{
+  public long Start { get; init; } = start;
+  public long Length { get; init; } = length;
+  public long End => Start + Length - 1;
 }
 
 public class Range(
