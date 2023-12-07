@@ -18,8 +18,9 @@ public class Program
 
     var parser = new PuzzleParser();
     var input = await File.ReadAllLinesAsync(args[0]);
+    var isPart2 = args.Length > 1 && args[1] == "part2";
 
-    long result = args.Length > 1 && args[1] == "part2"
+    long result = isPart2
       ? parser
         .ParseRace(input)
         .CalculateNumberOfWaysToWin()
@@ -27,7 +28,14 @@ public class Program
         .Select(r => r.CalculateNumberOfWaysToWin())
         .Aggregate((long)1, (acc, curr) => acc * curr);
 
-    Console.WriteLine($"The product of the margin of errors is {result}.");
+    if (isPart2)
+    {
+      Console.WriteLine($"The number of ways to win is {result}.");
+    }
+    else
+    {
+      Console.WriteLine($"The total number of ways to win is {result}.");
+    }
 
     return (int)result;
   }
