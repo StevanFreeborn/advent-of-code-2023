@@ -49,7 +49,7 @@ dotnet build
 | 03  | [Problem](./03/PROBLEM.md) |  [Solution](./03/GearRatios/)   |   ✅   | The edge case that got me here was lines ending with a part number. |
 | 04  | [Problem](./04/PROBLEM.md) | [Solution](./04/Scratchcards/)  |   ✅   | Part 2 gets out of hand quickly with just 200 cards.                |
 | 05  | [Problem](./05/PROBLEM.md) |    [Solution](./05/IYGASAF/)    |   ✅   | I brute forced part 2 using parallelism. I know shame.              |
-| 06  | [Problem](./06/PROBLEM.md) |        [Solution](./06/)        |   ⌛   |
+| 06  | [Problem](./06/PROBLEM.md) |   [Solution](./06/WaitForIt/)   |   ✅   | Thank goodness part 2 was not like 5's part 2. 😅                   |
 | 07  | [Problem](./07/PROBLEM.md) |        [Solution](./07/)        |   ⌛   |
 | 08  | [Problem](./08/PROBLEM.md) |        [Solution](./08/)        |   ⌛   |
 | 09  | [Problem](./09/PROBLEM.md) |        [Solution](./09/)        |   ⌛   |
