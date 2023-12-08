@@ -1,4 +1,6 @@
-﻿namespace WaitForIt;
+﻿using System.Diagnostics;
+
+namespace WaitForIt;
 
 public class Program
 {
@@ -20,6 +22,9 @@ public class Program
     var input = await File.ReadAllLinesAsync(args[0]);
     var isPart2 = args.Length > 1 && args[1] == "part2";
 
+    var stopWatch = new Stopwatch();
+    stopWatch.Start();
+
     long result = isPart2
       ? parser
         .ParseRace(input)
@@ -28,13 +33,15 @@ public class Program
         .Select(r => r.CalculateNumberOfWaysToWin())
         .Aggregate((long)1, (acc, curr) => acc * curr);
 
+    stopWatch.Stop();
+
     if (isPart2)
     {
-      Console.WriteLine($"The number of ways to win is {result}.");
+      Console.WriteLine($"The number of ways to win is {result}. ({stopWatch.ElapsedMilliseconds}ms)");
     }
     else
     {
-      Console.WriteLine($"The total number of ways to win is {result}.");
+      Console.WriteLine($"The total number of ways to win is {result}. ({stopWatch.ElapsedMilliseconds}ms)");
     }
 
     return (int)result;
@@ -117,19 +124,29 @@ public class Race(
   /// <returns>The number of ways the race can be won.</returns>
   public long CalculateNumberOfWaysToWin()
   {
-    var numberOfWaysToWin = 0;
+    var minDuration = 0.0;
+    var maxDuration = Math.Floor(Duration / 2.0);
 
-    for (var secsHeld = 0; secsHeld < Duration; secsHeld++)
+    while (minDuration < maxDuration - 1)
     {
-      var speed = 1 * secsHeld;
-      var distance = speed * (Duration - secsHeld);
+      var middleDuration = Math.Floor((maxDuration + minDuration) / 2);
+      var speed = 1 * middleDuration;
+      var distance = speed * (Duration - middleDuration);
 
-      if (distance > DistanceRecord)
+      if (distance >= DistanceRecord)
       {
-        numberOfWaysToWin++;
+        maxDuration = middleDuration;
+      }
+      else
+      {
+        minDuration = middleDuration;
       }
     }
 
-    return numberOfWaysToWin;
+    var result = Duration % 2 == 0
+      ? Duration - ((long)maxDuration * 2) - 1
+      : Duration - ((long)maxDuration * 2) + 1;
+
+    return result;
   }
 }

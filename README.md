@@ -42,15 +42,15 @@ dotnet build
 
 ## Challenges
 
-| Day | Problem                    |            Solution             | Status | Notes                                                               |
-| --- | -------------------------- | :-----------------------------: | :----: | ------------------------------------------------------------------- |
-| 01  | [Problem](./01/PROBLEM.md) |   [Solution](./01/Trebuchet/)   |   ✅   | The trickiest part here was accounting for overlapping digit words. |
-| 02  | [Problem](./02/PROBLEM.md) | [Solution](./02/CubeConundrum/) |   ✅   | The key to me here was to parse the input into a useful model.      |
-| 03  | [Problem](./03/PROBLEM.md) |  [Solution](./03/GearRatios/)   |   ✅   | The edge case that got me here was lines ending with a part number. |
-| 04  | [Problem](./04/PROBLEM.md) | [Solution](./04/Scratchcards/)  |   ✅   | Part 2 gets out of hand quickly with just 200 cards.                |
-| 05  | [Problem](./05/PROBLEM.md) |    [Solution](./05/IYGASAF/)    |   ✅   | I brute forced part 2 using parallelism. I know shame.              |
-| 06  | [Problem](./06/PROBLEM.md) |   [Solution](./06/WaitForIt/)   |   ✅   | Thank goodness part 2 was not like 5's part 2. 😅                   |
-| 07  | [Problem](./07/PROBLEM.md) |        [Solution](./07/)        |   ⌛   |
+| Day | Problem                    |            Solution             | Status | Notes                                                                                                   |
+| --- | -------------------------- | :-----------------------------: | :----: | ------------------------------------------------------------------------------------------------------- |
+| 01  | [Problem](./01/PROBLEM.md) |   [Solution](./01/Trebuchet/)   |   ✅   | The trickiest part here was accounting for overlapping digit words.                                     |
+| 02  | [Problem](./02/PROBLEM.md) | [Solution](./02/CubeConundrum/) |   ✅   | The key to me here was to parse the input into a useful model.                                          |
+| 03  | [Problem](./03/PROBLEM.md) |  [Solution](./03/GearRatios/)   |   ✅   | The edge case that got me here was lines ending with a part number.                                     |
+| 04  | [Problem](./04/PROBLEM.md) | [Solution](./04/Scratchcards/)  |   ✅   | Part 2 gets out of hand quickly with just 200 cards.                                                    |
+| 05  | [Problem](./05/PROBLEM.md) |    [Solution](./05/IYGASAF/)    |   ✅   | I brute forced part 2 using parallelism. I know shame.                                                  |
+| 06  | [Problem](./06/PROBLEM.md) |   [Solution](./06/WaitForIt/)   |   ✅   | Thank goodness part 2 was not like 5's part 2. 😅                                                       |
+| 07  | [Problem](./07/PROBLEM.md) |  [Solution](./07/CamelCards/)   |   ✅   | What took me longest here was I missed a case when jokers are wild and there are three groups of cards. |
 | 08  | [Problem](./08/PROBLEM.md) |        [Solution](./08/)        |   ⌛   |
 | 09  | [Problem](./09/PROBLEM.md) |        [Solution](./09/)        |   ⌛   |
 | 10  | [Problem](./10/PROBLEM.md) |        [Solution](./10/)        |   ⌛   |
