@@ -19,13 +19,14 @@ public class Program
       return -2;
     }
 
+    var jokersWild = args.Length > 1 && args[1] == "part2";
     var input = await File.ReadAllLinesAsync(args[0]);
 
     var stopWatch = new Stopwatch();
     stopWatch.Start();
 
     var result = input
-      .Select(Turn.Parse)
+      .Select(line => Turn.Parse(line, jokersWild))
       .OrderBy(t => t.Hand)
       .Select((turn, index) => turn.Bid * (index + 1))
       .Sum();
@@ -48,13 +49,23 @@ public class Turn(
 
   public override string ToString()
   {
-    return $"{string.Join("", Hand.Cards.Select(c => c.Value))} {Bid}";
+    var cards = Hand.Cards
+      .Select(c =>
+      {
+        return c.Value == 'W'
+          ? 'J'
+          : c.Value;
+      });
+
+    return $"{string.Join("", cards)} {Bid}";
   }
 
-  public static Turn Parse(string turnInput)
+  public static Turn Parse(string turnInput, bool jokersWild = false)
   {
     var parts = turnInput.Split(' ', StringSplitOptions.TrimEntries);
-    var cards = parts[0].Select(c => new Card(c)).ToList();
+    var cards = parts[0]
+      .Select(c => jokersWild && c == 'J' ? new Card('W') : new Card(c))
+      .ToList();
     var bid = int.Parse(parts[1]);
 
     return new Turn(new(cards), bid);
@@ -75,15 +86,33 @@ public class Hand : IComparable<Hand>
     Cards = cards;
   }
 
-  public HandType Type => Cards.GroupBy(c => c.Value).Count() switch
-  {
-    5 => HandType.HighCard,
-    4 => HandType.OnePair,
-    3 => Cards.GroupBy(c => c.Value).Any(g => g.Count() == 3) ? HandType.ThreeOfAKind : HandType.TwoPair,
-    2 => Cards.GroupBy(c => c.Value).Any(g => g.Count() == 4) ? HandType.FourOfAKind : HandType.FullHouse,
-    1 => HandType.FiveOfAKind,
-    _ => throw new ApplicationException("Hand has no defined type"),
-  };
+  public HandType Type => Cards.Any(c => c.Value == 'W')
+    ? Cards
+      .GroupBy(c => c.Value)
+      .Count() switch
+    {
+      5 => HandType.OnePair,
+      4 => HandType.ThreeOfAKind,
+      3 => Cards.GroupBy(c => c.Value).Any(g => g.Count() == 3)
+        ? HandType.FourOfAKind
+        : Cards.Count(c => c.Value == 'W') == 2
+          ? HandType.FourOfAKind
+          : HandType.FullHouse,
+      2 or
+      1 => HandType.FiveOfAKind,
+      _ => throw new ApplicationException("Hand has no defined type"),
+    }
+    : Cards
+      .GroupBy(c => c.Value)
+      .Count() switch
+    {
+      5 => HandType.HighCard,
+      4 => HandType.OnePair,
+      3 => Cards.GroupBy(c => c.Value).Any(g => g.Count() == 3) ? HandType.ThreeOfAKind : HandType.TwoPair,
+      2 => Cards.GroupBy(c => c.Value).Any(g => g.Count() == 4) ? HandType.FourOfAKind : HandType.FullHouse,
+      1 => HandType.FiveOfAKind,
+      _ => throw new ApplicationException("Hand has no defined type"),
+    };
 
   public int CompareTo(Hand? other)
   {
@@ -140,19 +169,20 @@ public class Card
 {
   private static readonly Dictionary<char, int> Cards = new()
   {
-    ['A'] = 12,
-    ['K'] = 11,
-    ['Q'] = 10,
-    ['J'] = 9,
-    ['T'] = 8,
-    ['9'] = 7,
-    ['8'] = 6,
-    ['7'] = 5,
-    ['6'] = 4,
-    ['5'] = 3,
-    ['4'] = 2,
-    ['3'] = 1,
-    ['2'] = 0,
+    ['A'] = 13,
+    ['K'] = 12,
+    ['Q'] = 11,
+    ['J'] = 10,
+    ['T'] = 9,
+    ['9'] = 8,
+    ['8'] = 7,
+    ['7'] = 6,
+    ['6'] = 5,
+    ['5'] = 4,
+    ['4'] = 3,
+    ['3'] = 2,
+    ['2'] = 1,
+    ['W'] = 0,
   };
 
   public char Value { get; init; }
