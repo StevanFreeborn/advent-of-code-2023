@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Trebuchet;
 
@@ -23,9 +24,15 @@ public class Program
       : new PartOnePuzzleSolver();
 
     var input = await File.ReadAllLinesAsync(args[0]);
+
+    var stopwatch = new Stopwatch();
+    stopwatch.Start();
+
     var result = puzzleSolver.SumCalibrationValues(input);
 
-    Console.WriteLine($"The sum of all calibration values is {result}.");
+    stopwatch.Stop();
+
+    Console.WriteLine($"The sum of all calibration values is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
 
     return result;
   }
