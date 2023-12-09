@@ -39,6 +39,11 @@ public class MapTests
           MapInput,
           2
         },
+        new object[]
+        {
+          File.ReadAllLines("INPUT.txt"),
+          13019
+        }
       };
 
     public static IEnumerable<object[]> ParseMapTestData =>
