@@ -18,18 +18,22 @@ public class Program
       return -2;
     }
 
+    var isPart2 = args.Length > 1 && args[1] == "part2";
     var input = await File.ReadAllLinesAsync(args[0]);
 
     var stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    var result = Map.Parse(input).CountStepsToZ();
+    var map = Map.Parse(input);
+    var result = isPart2
+      ? map.CountStepsToAllZNodes()
+      : map.CountStepsToZ();
 
     stopwatch.Stop();
 
-    Console.WriteLine($"The number of steps to Z is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    Console.WriteLine($"The number of steps is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
 
-    return result;
+    return (int)result;
   }
 }
 
@@ -69,6 +73,91 @@ public class Map(
     }
 
     return steps;
+  }
+
+  // This method finds the prime factors of a given number.
+  // It takes an integer 'number' as input and returns a list of prime factors.
+
+  public List<long> FindPrimeFactors(long number)
+  {
+    var factors = new List<long>();
+
+    // Start with the smallest prime number, 2.
+    var divisor = 2;
+
+    // Continue until the number is reduced to 2 or less.
+    while (number >= 2)
+    {
+      // If the number is divisible by the current divisor,
+      if (number % divisor == 0)
+      {
+        // Add the divisor to the list of factors.
+        factors.Add(divisor);
+        // Divide the number by the divisor to reduce it.
+        number /= divisor;
+      }
+      else
+      {
+        // If the number is not divisible by the current divisor, increment the divisor.
+        divisor++;
+      }
+    }
+
+    return factors;
+  }
+
+  public long FindLeastCommonMultiple(List<long> numbers)
+  {
+    var primeFactors = numbers.Select(FindPrimeFactors).ToList();
+
+    var uniquePrimeFactors = primeFactors
+      .SelectMany(pf => pf)
+      .Distinct()
+      .ToList();
+
+    var maxPrimeFactors = uniquePrimeFactors
+      .Select(upf => primeFactors.Max(pf => pf.Count(f => f == upf)))
+      .ToList();
+
+    var result = uniquePrimeFactors
+      .Zip(maxPrimeFactors)
+      .Aggregate(
+        (long)1,
+        (acc, b) =>
+          // b.First is the prime factor
+          // b.Second is the number of times it occurs
+          acc * (long)Math.Pow(b.First, b.Second)
+      );
+
+    return result;
+  }
+
+  public long CountStepsToAllZNodes()
+  {
+    var startNodes = Nodes.Where(n => n.Current.EndsWith('A')).ToList();
+    var nodeSteps = new List<long>();
+
+    foreach (var startNode in startNodes)
+    {
+      var current = startNode;
+      var steps = 0;
+
+      while (current.Current.EndsWith('Z') is false)
+      {
+        var next = Turns[steps % Turns.Count] switch
+        {
+          'R' => current.Right,
+          'L' => current.Left,
+          _ => throw new Exception("Invalid turn")
+        };
+        current = Nodes.First(n => n.Current == next);
+        steps++;
+      }
+
+      nodeSteps.Add(steps);
+    }
+
+    return FindLeastCommonMultiple(nodeSteps);
   }
 }
 
