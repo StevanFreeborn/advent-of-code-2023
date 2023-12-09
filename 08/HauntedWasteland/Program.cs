@@ -37,14 +37,32 @@ public class Program
   }
 }
 
+/// <summary>
+/// A map of the Haunted Wasteland.
+/// </summary>
+/// <param name="turns">The turns to take at each step.</param>
+/// <param name="nodes">The nodes in the map.</param>
+/// <returns>An instance of <see cref="Map"/>.</returns>
 public class Map(
   List<char> turns,
   List<Node> nodes
 )
 {
+  /// <summary>
+  /// Gets the turns to take at each step.
+  /// </summary>
   public List<char> Turns { get; init; } = turns;
+
+  /// <summary>
+  /// Gets the nodes in the map.
+  /// </summary>
   public List<Node> Nodes { get; init; } = nodes;
 
+  /// <summary>
+  /// Parses a map from a string array.
+  /// </summary>
+  /// <param name="mapInput">The map input.</param>
+  /// <returns>An instance of <see cref="Map"/>.</returns>
   public static Map Parse(string[] mapInput)
   {
     var turns = mapInput[0].ToList();
@@ -55,6 +73,10 @@ public class Map(
     return new Map(turns, nodes);
   }
 
+  /// <summary>
+  /// Counts the number of steps to the Z node.
+  /// </summary>
+  /// <returns>The number of steps to the Z node.</returns>
   public int CountStepsToZ()
   {
     var current = Nodes.First(n => n.Current == "AAA");
@@ -75,9 +97,11 @@ public class Map(
     return steps;
   }
 
-  // This method finds the prime factors of a given number.
-  // It takes an integer 'number' as input and returns a list of prime factors.
-
+  /// <summary>
+  /// Finds the prime factors of a number.
+  /// </summary>
+  /// <param name="number">The number to find the prime factors of.</param>
+  /// <returns>The prime factors of the number.</returns>
   public List<long> FindPrimeFactors(long number)
   {
     var factors = new List<long>();
@@ -106,6 +130,11 @@ public class Map(
     return factors;
   }
 
+  /// <summary>
+  /// Finds the least common multiple of a list of numbers.
+  /// </summary>
+  /// <param name="numbers">The numbers to find the least common multiple of.</param>
+  /// <returns>The least common multiple of the numbers.</returns>
   public long FindLeastCommonMultiple(List<long> numbers)
   {
     var primeFactors = numbers.Select(FindPrimeFactors).ToList();
@@ -132,6 +161,10 @@ public class Map(
     return result;
   }
 
+  /// <summary>
+  /// Counts the number of steps to all Z nodes.
+  /// </summary>
+  /// <returns>The number of steps to all Z nodes.</returns>
   public long CountStepsToAllZNodes()
   {
     var startNodes = Nodes.Where(n => n.Current.EndsWith('A')).ToList();
@@ -161,21 +194,47 @@ public class Map(
   }
 }
 
+/// <summary>
+/// A node in the map.
+/// </summary>
+/// <param name="current">The current node.</param>
+/// <param name="left">The left node.</param>
+/// <param name="right">The right node.</param>
+/// <returns>An instance of <see cref="Node"/>.</returns>
 public class Node(
   string current,
   string left,
   string right
 )
 {
+  /// <summary>
+  /// Gets the current node.
+  /// </summary>
   public string Current { get; init; } = current;
+
+  /// <summary>
+  /// Gets the left node.
+  /// </summary>
   public string Left { get; init; } = left;
+
+  /// <summary>
+  /// Gets the right node.
+  /// </summary>
   public string Right { get; init; } = right;
 
+  /// <summary>
+  /// Casts the node to a string.
+  /// </summary>
   public override string ToString()
   {
     return $"{Current} = ({Left},{Right})";
   }
 
+  /// <summary>
+  /// Parses a node from a string.
+  /// </summary>
+  /// <param name="nodeString">The node string.</param>
+  /// <returns>An instance of <see cref="Node"/>.</returns>
   public static Node Parse(string nodeString)
   {
     var parts = nodeString.Split(
