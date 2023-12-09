@@ -10,10 +10,29 @@ public class MapTests
   }
 
   [Theory]
-  [MemberData(nameof(TestData.CountTurnsTestData), MemberType = typeof(TestData))]
+  [MemberData(nameof(TestData.CountStepsTestData), MemberType = typeof(TestData))]
   public void CountStepsToZ_WhenGivenMap_ItShouldReturnNumberOfSteps(string[] input, int expected)
   {
     Map.Parse(input).CountStepsToZ().Should().Be(expected);
+  }
+
+  [Theory]
+  [MemberData(nameof(TestData.CountStepsToAllZNodesData), MemberType = typeof(TestData))]
+  public void CountStepsToAllZNodes_WhenGivenMap_ItShouldReturnNumberOfSteps(string[] input, long expected)
+  {
+    Map.Parse(input).CountStepsToAllZNodes().Should().Be(expected);
+  }
+
+  [Fact]
+  public void FindPrimeFactors_WhenGivenNumber_ItShouldReturnPrimeFactors()
+  {
+    new Map([], []).FindPrimeFactors(11911).Should().BeEquivalentTo([43, 277]);
+  }
+
+  [Fact]
+  public void FindLeastCommonMultiple_WhenGivenNumbers_ItShouldReturnLeastCommonMultiple()
+  {
+    new Map([], []).FindLeastCommonMultiple([16343, 11911, 20221, 21883, 13019, 19667]).Should().Be(13524038372771);
   }
 
   public static class TestData
@@ -31,7 +50,9 @@ public class MapTests
       "ZZZ = (ZZZ, ZZZ)",
     ];
 
-    public static IEnumerable<object[]> CountTurnsTestData =>
+    private static readonly string[] Input = File.ReadAllLines("INPUT.txt");
+
+    public static IEnumerable<object[]> CountStepsTestData =>
       new List<object[]>
       {
         new object[]
@@ -41,8 +62,35 @@ public class MapTests
         },
         new object[]
         {
-          File.ReadAllLines("INPUT.txt"),
+          Input,
           13019
+        }
+      };
+
+    public static IEnumerable<object[]> CountStepsToAllZNodesData =>
+      new List<object[]>
+      {
+        new object[]
+        {
+          new string[]
+          {
+            "LR",
+            "",
+            "11A = (11B, XXX)",
+            "11B = (XXX, 11Z)",
+            "11Z = (11B, XXX)",
+            "22A = (22B, XXX)",
+            "22B = (22C, 22C)",
+            "22C = (22Z, 22Z)",
+            "22Z = (22B, 22B)",
+            "XXX = (XXX, XXX)",
+          },
+          6
+        },
+        new object[]
+        {
+          Input,
+          13524038372771
         }
       };
 
