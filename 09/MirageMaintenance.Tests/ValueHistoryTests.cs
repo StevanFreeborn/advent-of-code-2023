@@ -6,28 +6,40 @@ public class ValueHistoryTests
   [MemberData(nameof(TestData.CalculateDifferencesTestData), MemberType = typeof(TestData))]
   public void CalculateDifferences_GivenAListOfValues_ItShouldReturnAListOfDifferences(List<long> values, List<long> expected)
   {
-    new ValueHistory([]).CalculateDifferences(values).Should().BeEquivalentTo(expected);
+    new ValueHistory([])
+      .CalculateDifferences(values)
+      .Should()
+      .BeEquivalentTo(expected);
   }
 
   [Theory]
   [MemberData(nameof(TestData.CalculateHistoryTestData), MemberType = typeof(TestData))]
   public void CalculateHistory_GivenAListOfValues_ItShouldReturnAListOfHistoricalValues(List<long> values, List<List<long>> expected)
   {
-    new ValueHistory(values).CalculateHistory().Should().BeEquivalentTo(expected);
+    new ValueHistory(values)
+      .CalculateHistory()
+      .Should()
+      .BeEquivalentTo(expected);
   }
 
   [Theory]
   [MemberData(nameof(TestData.CalculateNextValueTestData), MemberType = typeof(TestData))]
   public void CalculateNextValue_GivenAListOfValues_ItShouldReturnTheNextValue(List<long> values, long expected)
   {
-    new ValueHistory(values).CalculateNextValue().Should().Be(expected);
+    new ValueHistory(values)
+      .CalculateNextValue()
+      .Should()
+      .Be(expected);
   }
 
   [Theory]
   [MemberData(nameof(TestData.CalculateNextValueTestDataBackwards), MemberType = typeof(TestData))]
   public void CalculateNextValue_GivenAListOfValuesAndBackwardsIsTrue_ItShouldReturnTheNextValue(List<long> values, long expected)
   {
-    new ValueHistory(values).CalculateNextValue(true).Should().Be(expected);
+    new ValueHistory(values)
+      .CalculateNextValue(true)
+      .Should()
+      .Be(expected);
   }
 
   public static class TestData
