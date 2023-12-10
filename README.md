@@ -42,30 +42,30 @@ dotnet build
 
 ## Challenges
 
-| Day | Problem                    |              Solution              | Status | Notes                                                                                                   |
-| --- | -------------------------- | :--------------------------------: | :----: | ------------------------------------------------------------------------------------------------------- |
-| 01  | [Problem](./01/PROBLEM.md) |    [Solution](./01/Trebuchet/)     |   ✅   | The trickiest part here was accounting for overlapping digit words.                                     |
-| 02  | [Problem](./02/PROBLEM.md) |  [Solution](./02/CubeConundrum/)   |   ✅   | The key to me here was to parse the input into a useful model.                                          |
-| 03  | [Problem](./03/PROBLEM.md) |    [Solution](./03/GearRatios/)    |   ✅   | The edge case that got me here was lines ending with a part number.                                     |
-| 04  | [Problem](./04/PROBLEM.md) |   [Solution](./04/Scratchcards/)   |   ✅   | Part 2 gets out of hand quickly with just 200 cards.                                                    |
-| 05  | [Problem](./05/PROBLEM.md) |     [Solution](./05/IYGASAF/)      |   ✅   | I brute forced part 2 using parallelism. I know shame.                                                  |
-| 06  | [Problem](./06/PROBLEM.md) |    [Solution](./06/WaitForIt/)     |   ✅   | Thank goodness part 2 was not like 5's part 2. 😅                                                       |
-| 07  | [Problem](./07/PROBLEM.md) |    [Solution](./07/CamelCards/)    |   ✅   | What took me longest here was I missed a case when jokers are wild and there are three groups of cards. |
-| 08  | [Problem](./08/PROBLEM.md) | [Solution](./08/HauntedWasteland/) |   ✅   | Got to implement a least common multiple algorithm for part 2.                                          |
-| 09  | [Problem](./09/PROBLEM.md) |         [Solution](./09/)          |   ⌛   |
-| 10  | [Problem](./10/PROBLEM.md) |         [Solution](./10/)          |   ⌛   |
-| 11  | [Problem](./11/PROBLEM.md) |         [Solution](./11/)          |   ⌛   |
-| 12  | [Problem](./12/PROBLEM.md) |         [Solution](./12/)          |   ⌛   |
-| 13  | [Problem](./13/PROBLEM.md) |         [Solution](./13/)          |   ⌛   |
-| 14  | [Problem](./14/PROBLEM.md) |         [Solution](./14/)          |   ⌛   |
-| 15  | [Problem](./15/PROBLEM.md) |         [Solution](./15/)          |   ⌛   |
-| 16  | [Problem](./16/PROBLEM.md) |         [Solution](./16/)          |   ⌛   |
-| 17  | [Problem](./17/PROBLEM.md) |         [Solution](./17/)          |   ⌛   |
-| 18  | [Problem](./18/PROBLEM.md) |         [Solution](./18/)          |   ⌛   |
-| 19  | [Problem](./19/PROBLEM.md) |         [Solution](./19/)          |   ⌛   |
-| 20  | [Problem](./20/PROBLEM.md) |         [Solution](./20/)          |   ⌛   |
-| 21  | [Problem](./21/PROBLEM.md) |         [Solution](./21/)          |   ⌛   |
-| 22  | [Problem](./22/PROBLEM.md) |         [Solution](./22/)          |   ⌛   |
-| 23  | [Problem](./23/PROBLEM.md) |         [Solution](./23/)          |   ⌛   |
-| 24  | [Problem](./24/PROBLEM.md) |         [Solution](./24/)          |   ⌛   |
-| 25  | [Problem](./25/PROBLEM.md) |         [Solution](./25/)          |   ⌛   |
+| Day | Problem                    |              Solution               | Status | Notes                                                                                                                                |
+| --- | -------------------------- | :---------------------------------: | :----: | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 01  | [Problem](./01/PROBLEM.md) |     [Solution](./01/Trebuchet/)     |   ✅   | The trickiest part here was accounting for overlapping digit words.                                                                  |
+| 02  | [Problem](./02/PROBLEM.md) |   [Solution](./02/CubeConundrum/)   |   ✅   | The key to me here was to parse the input into a useful model.                                                                       |
+| 03  | [Problem](./03/PROBLEM.md) |    [Solution](./03/GearRatios/)     |   ✅   | The edge case that got me here was lines ending with a part number.                                                                  |
+| 04  | [Problem](./04/PROBLEM.md) |   [Solution](./04/Scratchcards/)    |   ✅   | Part 2 gets out of hand quickly with just 200 cards.                                                                                 |
+| 05  | [Problem](./05/PROBLEM.md) |      [Solution](./05/IYGASAF/)      |   ✅   | I brute forced part 2 using parallelism. I know shame.                                                                               |
+| 06  | [Problem](./06/PROBLEM.md) |     [Solution](./06/WaitForIt/)     |   ✅   | Thank goodness part 2 was not like 5's part 2. 😅                                                                                    |
+| 07  | [Problem](./07/PROBLEM.md) |    [Solution](./07/CamelCards/)     |   ✅   | What took me longest here was I missed a case when jokers are wild and there are three groups of cards.                              |
+| 08  | [Problem](./08/PROBLEM.md) | [Solution](./08/HauntedWasteland/)  |   ✅   | Got to implement a least common multiple algorithm for part 2.                                                                       |
+| 09  | [Problem](./09/PROBLEM.md) | [Solution](./09/MirageMaintenance/) |   ✅   | Part 1 took me unnecessarily long. The bug was summing a line to check for all zeros is bad idea when negative numbers are involved. |
+| 10  | [Problem](./10/PROBLEM.md) |          [Solution](./10/)          |   ⌛   |
+| 11  | [Problem](./11/PROBLEM.md) |          [Solution](./11/)          |   ⌛   |
+| 12  | [Problem](./12/PROBLEM.md) |          [Solution](./12/)          |   ⌛   |
+| 13  | [Problem](./13/PROBLEM.md) |          [Solution](./13/)          |   ⌛   |
+| 14  | [Problem](./14/PROBLEM.md) |          [Solution](./14/)          |   ⌛   |
+| 15  | [Problem](./15/PROBLEM.md) |          [Solution](./15/)          |   ⌛   |
+| 16  | [Problem](./16/PROBLEM.md) |          [Solution](./16/)          |   ⌛   |
+| 17  | [Problem](./17/PROBLEM.md) |          [Solution](./17/)          |   ⌛   |
+| 18  | [Problem](./18/PROBLEM.md) |          [Solution](./18/)          |   ⌛   |
+| 19  | [Problem](./19/PROBLEM.md) |          [Solution](./19/)          |   ⌛   |
+| 20  | [Problem](./20/PROBLEM.md) |          [Solution](./20/)          |   ⌛   |
+| 21  | [Problem](./21/PROBLEM.md) |          [Solution](./21/)          |   ⌛   |
+| 22  | [Problem](./22/PROBLEM.md) |          [Solution](./22/)          |   ⌛   |
+| 23  | [Problem](./23/PROBLEM.md) |          [Solution](./23/)          |   ⌛   |
+| 24  | [Problem](./24/PROBLEM.md) |          [Solution](./24/)          |   ⌛   |
+| 25  | [Problem](./25/PROBLEM.md) |          [Solution](./25/)          |   ⌛   |
