@@ -9,6 +9,19 @@ public class UnitTest1
     OasisReport.Parse(input).Should().BeEquivalentTo(expected);
   }
 
+  [Fact]
+  public void CalculateSumOfNextValues_GivenAReportInput_ItShouldReturnTheSumOfAllNextValues()
+  {
+    var input = new string[]
+    {
+      "0 3 6 9 12 15",
+      "1 3 6 10 15 21",
+      "10 13 16 21 30 45",
+    };
+
+    OasisReport.Parse(input).CalculateSumOfNextValues().Should().Be(114);
+  }
+
   public static class TestData
   {
     public static IEnumerable<object[]> OasisReportParseTestData =>
