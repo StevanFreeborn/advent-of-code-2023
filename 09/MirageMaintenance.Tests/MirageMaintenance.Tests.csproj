@@ -27,4 +27,10 @@
     <ProjectReference Include="..\MirageMaintenance\MirageMaintenance.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\INPUT.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
