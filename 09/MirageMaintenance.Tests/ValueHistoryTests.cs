@@ -23,8 +23,25 @@ public class ValueHistoryTests
     new ValueHistory(values).CalculateNextValue().Should().Be(expected);
   }
 
+  [Theory]
+  [MemberData(nameof(TestData.CalculateNextValueTestDataBackwards), MemberType = typeof(TestData))]
+  public void CalculateNextValue_GivenAListOfValuesAndBackwardsIsTrue_ItShouldReturnTheNextValue(List<long> values, long expected)
+  {
+    new ValueHistory(values).CalculateNextValue(true).Should().Be(expected);
+  }
+
   public static class TestData
   {
+    public static IEnumerable<object[]> CalculateNextValueTestDataBackwards =>
+      new List<object[]>
+      {
+        new object[]
+        {
+          new List<long> { 10, 13, 16, 21, 30, 45 },
+          5,
+        }
+      };
+
     public static IEnumerable<object[]> CalculateNextValueTestData =>
       new List<object[]>
       {

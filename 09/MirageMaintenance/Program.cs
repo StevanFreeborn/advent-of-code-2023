@@ -18,12 +18,13 @@ class Program
       return -2;
     }
 
+    var isPart2 = args.Length > 1 && args[1] == "part2";
     var input = await File.ReadAllLinesAsync(args[0]);
 
     var stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    var result = OasisReport.Parse(input).CalculateSumOfNextValues();
+    var result = OasisReport.Parse(input).CalculateSumOfNextValues(isPart2);
 
     stopwatch.Stop();
 
@@ -39,8 +40,8 @@ public class OasisReport(
 {
   public List<ValueHistory> ValueHistories { get; init; } = valueHistories;
 
-  public long CalculateSumOfNextValues() => ValueHistories
-    .Select(valueHistory => valueHistory.CalculateNextValue())
+  public long CalculateSumOfNextValues(bool backwards = false) => ValueHistories
+    .Select(valueHistory => valueHistory.CalculateNextValue(backwards))
     .Sum();
 
   public static OasisReport Parse(string[] oasisReportInput)
@@ -91,10 +92,15 @@ public class ValueHistory(
     return allHistoricalValues;
   }
 
-  public long CalculateNextValue()
+  public long CalculateNextValue(bool backwards = false)
   {
     var historicalValues = CalculateHistory();
     var values = historicalValues.Prepend(Values).Reverse().ToList();
+
+    if (backwards)
+    {
+      values.ForEach(value => value.Reverse());
+    }
 
     for (var i = 0; i < values.Count; i++)
     {
@@ -108,7 +114,11 @@ public class ValueHistory(
 
       var previousValues = values[i - 1];
 
-      currentValues.Add(currentValues.Last() + previousValues.Last());
+      var extrapolatedValue = backwards
+        ? currentValues.Last() - previousValues.Last()
+        : currentValues.Last() + previousValues.Last();
+
+      currentValues.Add(extrapolatedValue);
     }
 
     return values.Last().Last();
