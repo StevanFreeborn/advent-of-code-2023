@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace PipeMaze;
 
@@ -18,20 +19,30 @@ public class Program
       return -2;
     }
 
+    var isPart2 = args.Length > 1 && args[1] == "part2";
     var input = await File.ReadAllLinesAsync(args[0]);
 
     var stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    var result = Maze.Parse(input).FarthestStepFromStart;
+    var maze = Maze.Parse(input);
+    var result = isPart2 ? maze.GetAreaOfLoop() : maze.GetFarthestStepFromStart();
 
     stopwatch.Stop();
 
-    Console.WriteLine($"The farthest step from the starting pipe is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    if (isPart2)
+    {
+      Console.WriteLine($"The area of the loop is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    }
+    else
+    {
+      Console.WriteLine($"The farthest step from the start is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    }
 
     return result;
   }
 }
+
 
 public class Maze(
   int width,
@@ -56,7 +67,43 @@ public class Maze(
 
   public Pipe? StartingPipe => Pipes.FirstOrDefault(p => p.Type is PipeType.Unknown);
 
-  public int FarthestStepFromStart => GetLoop().Count / 2;
+  public int GetFarthestStepFromStart() => GetLoop().Count / 2;
+
+  public int GetAreaOfLoop()
+  {
+    var count = 0;
+    var loop = GetLoop();
+    var areInsideLoop = false;
+    var verticalBoundaries = new List<PipeType>()
+    {
+      PipeType.UpAndDown,
+      PipeType.UpAndRight,
+      PipeType.UpAndLeft,
+    };
+
+    for (var row = 0; row < Height; row++)
+    {
+      for (var column = 0; column < Width; column++)
+      {
+        var pipe = loop.FirstOrDefault(p => p.Coordinate.Column == column && p.Coordinate.Row == row);
+
+        if (pipe is null && areInsideLoop is true)
+        {
+          count++;
+        }
+
+        if (
+          pipe is not null &&
+          verticalBoundaries.Contains(pipe.Type) is true
+        )
+        {
+          areInsideLoop = !areInsideLoop;
+        }
+      }
+    }
+
+    return count;
+  }
 
   public List<Pipe> GetLoop()
   {
