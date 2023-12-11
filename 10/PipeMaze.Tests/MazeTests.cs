@@ -8,8 +8,14 @@ public class MazeTests
   public void Parse_WhenGivenInput_ItShouldReturnExpectedMaze(string[] input, Maze expectedMaze, Pipe? expectedStartingPipe)
   {
     var maze = Maze.Parse(input);
-    maze.Should().BeEquivalentTo(expectedMaze);
-    maze.StartingPipe.Should().BeEquivalentTo(expectedStartingPipe);
+
+    maze
+      .Should()
+      .BeEquivalentTo(expectedMaze);
+
+    maze.StartingPipe
+      .Should()
+      .BeEquivalentTo(expectedStartingPipe);
   }
 
   [Theory]
@@ -45,8 +51,9 @@ public class MazeTests
   [MemberData(nameof(TestData.AreaTestData), MemberType = typeof(TestData))]
   public void Area_WhenGivenInput_ItShouldReturnExpectedArea(string[] input, int expectedArea)
   {
-    var maze = Maze.Parse(input);
-    maze.GetAreaOfLoop()
+    Maze
+      .Parse(input)
+      .GetAreaOfLoop()
       .Should()
       .Be(expectedArea);
   }

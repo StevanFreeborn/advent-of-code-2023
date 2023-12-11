@@ -43,7 +43,13 @@ public class Program
   }
 }
 
-
+/// <summary>
+/// Represents a maze of pipes.
+/// </summary>
+/// <param name="width">The width of the maze.</param>
+/// <param name="height">The height of the maze.</param>
+/// <param name="pipes">The pipes in the maze.</param>
+/// <returns>An instance of <see cref="Maze"/>.</returns>
 public class Maze(
   int width,
   int height,
@@ -61,14 +67,29 @@ public class Maze(
     { 'S', PipeType.Unknown },
   };
 
-  public int Width { get; init; } = width;
-  public int Height { get; init; } = height;
+  private int Width { get; init; } = width;
+  private int Height { get; init; } = height;
+
+  /// <summary>
+  /// Gets the pipes in the maze.
+  /// </summary>
   public List<Pipe> Pipes { get; init; } = pipes;
 
+  /// <summary>
+  /// Gets the starting pipe in the maze.
+  /// </summary>
   public Pipe? StartingPipe => Pipes.FirstOrDefault(p => p.Type is PipeType.Unknown);
 
+  /// <summary>
+  /// Gets the farthest step from the start.
+  /// </summary>
+  /// <returns>The farthest step from the start.</returns>
   public int GetFarthestStepFromStart() => GetLoop().Count / 2;
 
+  /// <summary>
+  /// Gets the area of the loop.
+  /// </summary>
+  /// <returns>The area of the loop.</returns>
   public int GetAreaOfLoop()
   {
     var count = 0;
@@ -81,17 +102,24 @@ public class Maze(
       PipeType.UpAndLeft,
     };
 
+    // Loop through each row
     for (var row = 0; row < Height; row++)
     {
+      // Loop through each column in the row
       for (var column = 0; column < Width; column++)
       {
+        // Check if a pipe in loop exists at the current coordinate
         var pipe = loop.FirstOrDefault(p => p.Coordinate.Column == column && p.Coordinate.Row == row);
 
+        // If a pipe does not exist at the current coordinate 
+        // and we are inside the loop, increment the count
         if (pipe is null && areInsideLoop is true)
         {
           count++;
         }
 
+        // If a pipe exists at the current coordinate and the pipe is 
+        // representative of a vertical boundary, toggle the areInsideLoop flag
         if (
           pipe is not null &&
           verticalBoundaries.Contains(pipe.Type) is true
@@ -105,6 +133,10 @@ public class Maze(
     return count;
   }
 
+  /// <summary>
+  /// Gets the loop in the maze.
+  /// </summary>
+  /// <returns>The loop in the maze.</returns>
   public List<Pipe> GetLoop()
   {
     if (StartingPipe is null)
@@ -138,6 +170,10 @@ public class Maze(
     return loop;
   }
 
+  /// <summary>
+  /// Identifies the type of the starting pipe.
+  /// </summary>
+  /// <returns>The type of the starting pipe.</returns>
   public PipeType IdentifyStartPipeType()
   {
     if (StartingPipe is null)
@@ -201,6 +237,11 @@ public class Maze(
     return PipeType.Unknown;
   }
 
+  /// <summary>
+  /// Gets the connecting pipes of the provided pipe.
+  /// </summary>
+  /// <param name="pipe">The pipe to get the connecting pipes of.</param>
+  /// <returns>The connecting pipes of the provided pipe.</returns>
   public List<Pipe?> GetConnectingPipes(Pipe pipe)
   {
     var connectingPipes = new List<Pipe?>();
@@ -208,6 +249,10 @@ public class Maze(
     var isNotOnFirstColumn = pipe.Coordinate.Column > 0;
     var isNotOnLastRow = pipe.Coordinate.Row < Height - 1;
     var isNotOnLastColumn = pipe.Coordinate.Column < Width - 1;
+    var nextRow = pipe.Coordinate.Row + 1;
+    var nextColumn = pipe.Coordinate.Column + 1;
+    var previousRow = pipe.Coordinate.Row - 1;
+    var previousColumn = pipe.Coordinate.Column - 1;
 
     switch (pipe.Type)
     {
@@ -216,14 +261,22 @@ public class Maze(
           if (isNotOnFirstRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row - 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == previousRow
+              )
             );
           }
 
           if (isNotOnLastRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row + 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == nextRow
+              )
             );
           }
 
@@ -234,14 +287,22 @@ public class Maze(
           if (isNotOnFirstColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column - 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == previousColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
           if (isNotOnLastColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column + 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == nextColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -252,14 +313,22 @@ public class Maze(
           if (isNotOnFirstRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row - 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == previousRow
+              )
             );
           }
 
           if (isNotOnLastColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column + 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == nextColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -270,14 +339,22 @@ public class Maze(
           if (isNotOnFirstRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row - 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == previousRow
+              )
             );
           }
 
           if (isNotOnFirstColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column - 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == previousColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -288,14 +365,22 @@ public class Maze(
           if (isNotOnLastRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row + 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == nextRow
+              )
             );
           }
 
           if (isNotOnLastColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column + 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == nextColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -306,14 +391,22 @@ public class Maze(
           if (isNotOnLastRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row + 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == nextRow
+              )
             );
           }
 
           if (isNotOnFirstColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column - 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == previousColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -324,28 +417,44 @@ public class Maze(
           if (isNotOnFirstRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row - 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == previousRow
+              )
             );
           }
 
           if (isNotOnLastColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column + 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == nextColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
           if (isNotOnLastRow)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column && p.Coordinate.Row == pipe.Coordinate.Row + 1)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == pipe.Coordinate.Column &&
+                  p.Coordinate.Row == nextRow
+              )
             );
           }
 
           if (isNotOnFirstColumn)
           {
             connectingPipes.Add(
-              Pipes.FirstOrDefault(p => p.Coordinate.Column == pipe.Coordinate.Column - 1 && p.Coordinate.Row == pipe.Coordinate.Row)
+              Pipes.FirstOrDefault(
+                p =>
+                  p.Coordinate.Column == previousColumn &&
+                  p.Coordinate.Row == pipe.Coordinate.Row
+              )
             );
           }
 
@@ -358,6 +467,11 @@ public class Maze(
     return connectingPipes;
   }
 
+  /// <summary>
+  /// Parses the provided input into a maze.
+  /// </summary>
+  /// <param name="input">The input to parse.</param>
+  /// <returns>An instance of <see cref="Maze"/>.</returns>
   public static Maze Parse(string[] input)
   {
     var width = input[0].Length;
@@ -381,6 +495,14 @@ public class Maze(
   }
 }
 
+/// <summary>
+/// Represents a pipe in a maze.
+/// </summary>
+/// <param name="symbol">The symbol of the pipe.</param>
+/// <param name="type">The type of the pipe.</param>
+/// <param name="row">The row of the pipe.</param>
+/// <param name="column">The column of the pipe.</param>
+/// <returns>An instance of <see cref="Pipe"/>.</returns>
 public class Pipe(
   char symbol,
   PipeType type,
@@ -388,25 +510,55 @@ public class Pipe(
   int column
 )
 {
+  /// <summary>
+  /// Gets the symbol of the pipe.
+  /// </summary>
   public char Symbol { get; init; } = symbol;
+
+  /// <summary>
+  /// Gets the type of the pipe.
+  /// </summary>
   public PipeType Type { get; init; } = type;
+
+  /// <summary>
+  /// Gets the coordinate of the pipe.
+  /// </summary>
   public PipeCoordinate Coordinate { get; init; } = new(column, row);
 }
 
+/// <summary>
+/// Represents a coordinate of a pipe in a maze.
+/// </summary>
+/// <param name="column">The column of the pipe.</param>
+/// <param name="row">The row of the pipe.</param>
+/// <returns>An instance of <see cref="PipeCoordinate"/>.</returns>
 public class PipeCoordinate(
   int column,
   int row
 ) : IEquatable<PipeCoordinate>
 {
+  /// <summary>
+  /// Gets the column of the pipe.
+  /// </summary>
   public int Column { get; init; } = column;
+
+  /// <summary>
+  /// Gets the row of the pipe.
+  /// </summary>
   public int Row { get; init; } = row;
 
+  /// <summary>
+  /// Determines whether the provided object is equal to the current object.
+  /// </summary>
   public bool Equals(PipeCoordinate? other) =>
     other is not null &&
     Column == other.Column &&
     Row == other.Row;
 }
 
+/// <summary>
+/// Represents the type of a pipe in a maze.
+/// </summary>
 public enum PipeType
 {
   UpAndDown, // Vertical Pipe
