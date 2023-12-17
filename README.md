@@ -54,7 +54,7 @@ dotnet build
 | 08  | [Problem](./08/PROBLEM.md) | [Solution](./08/HauntedWasteland/)  |   ✅   | Got to implement a least common multiple algorithm for part 2.                                                                                   |
 | 09  | [Problem](./09/PROBLEM.md) | [Solution](./09/MirageMaintenance/) |   ✅   | Part 1 took me unnecessarily long. The bug was summing a line to check for all zeros is bad idea when negative numbers are involved.             |
 | 10  | [Problem](./10/PROBLEM.md) |     [Solution](./10/PipeMaze/)      |   ✅   | So...my solutions are rather slow, but they work. Part 2 appears to have a mathematical solution, but scanning is what I came up with on my own. |
-| 11  | [Problem](./11/PROBLEM.md) |          [Solution](./11/)          |   ⌛   |
+| 11  | [Problem](./11/PROBLEM.md) |  [Solution](./11/CosmicExpansion/)  |   ✅   | Expanding the universe was fine in part 1, but part 2 showed I actually needed to calculate the expansion instead of expanding the input.        |
 | 12  | [Problem](./12/PROBLEM.md) |          [Solution](./12/)          |   ⌛   |
 | 13  | [Problem](./13/PROBLEM.md) |          [Solution](./13/)          |   ⌛   |
 | 14  | [Problem](./14/PROBLEM.md) |          [Solution](./14/)          |   ⌛   |
