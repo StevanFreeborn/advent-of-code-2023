@@ -38,6 +38,13 @@ public class Program
   }
 }
 
+/// <summary>
+/// Represents the universe.
+/// </summary>
+/// <param name="Height">The height of the universe.</param>
+/// <param name="Width">The width of the universe.</param>
+/// <param name="Galaxies">The galaxies in the universe.</param>
+/// <returns>An instance of <see cref="Universe"/>.</returns>
 public class Universe(
   int height,
   int width,
@@ -45,14 +52,34 @@ public class Universe(
 )
 {
   private const char GalaxySymbol = '#';
+
+  /// <summary>
+  /// Gets the height of the universe.
+  /// </summary>
   public int Height { get; init; } = height;
+
+  /// <summary>
+  /// Gets the width of the universe.
+  /// </summary>
   public int Width { get; init; } = width;
+
+  /// <summary>
+  /// Gets the galaxies in the universe.
+  /// </summary>
   public List<Galaxy> Galaxies { get; init; } = galaxies;
+
+  /// <summary>
+  /// Gets the sum of the shortest paths between galaxies.
+  /// </summary>
   public long SumOfShortestPathsBetweenGalaxies =>
     GetShortestPathsBetweenGalaxies()
     .Values
     .Sum();
 
+  /// <summary>
+  /// Gets the shortest paths between all pairs of galaxies.
+  /// </summary>
+  /// <returns>A dictionary containing the shortest paths between galaxies.</returns>
   public Dictionary<(int galaxyOneIndex, int galaxyTwoIndex), long> GetShortestPathsBetweenGalaxies()
   {
     var shortestPaths = new Dictionary<(int galaxyOneIndex, int galaxyTwoIndex), long>();
@@ -78,9 +105,21 @@ public class Universe(
     return shortestPaths;
   }
 
+  /// <summary>
+  /// Calculates the distance between two galaxies.
+  /// </summary>
+  /// <param name="galaxyOne">The first galaxy.</param>
+  /// <param name="galaxyTwo">The second galaxy.</param>
+  /// <returns>The distance between the two galaxies.</returns>
   public static long CalculateDistanceBetweenGalaxies(Galaxy galaxyOne, Galaxy galaxyTwo) =>
     Math.Abs(galaxyTwo.Row - galaxyOne.Row) + Math.Abs(galaxyTwo.Column - galaxyOne.Column);
 
+  /// <summary>
+  /// Parses the input into an instance of <see cref="Universe"/>.
+  /// </summary>
+  /// <param name="input">The input.</param>
+  /// <param name="expandFactor">The factor by which to expand the universe.</param>
+  /// <returns>An instance of <see cref="Universe"/>.</returns>
   public static Universe Parse(string[] input, int expandFactor = 2)
   {
     var emptyRows = new List<int>();
@@ -161,11 +200,24 @@ public class Universe(
   }
 }
 
+/// <summary>
+/// Represents a galaxy.
+/// </summary>
+/// <param name="Row">The row of the galaxy.</param>
+/// <param name="Column">The column of the galaxy.</param>
+/// <returns>An instance of <see cref="Galaxy"/>.</returns>
 public class Galaxy(
   long row,
   long column
 )
 {
+  /// <summary>
+  /// Gets the row of the galaxy.
+  /// </summary>
   public long Row { get; init; } = row;
+
+  /// <summary>
+  /// Gets the column of the galaxy.
+  /// </summary>
   public long Column { get; init; } = column;
 }
