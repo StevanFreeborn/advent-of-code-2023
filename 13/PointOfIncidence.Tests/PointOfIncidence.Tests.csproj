@@ -27,4 +27,16 @@
     <ProjectReference Include="..\PointOfIncidence\PointOfIncidence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\INPUT.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include=".\EXAMPLE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
