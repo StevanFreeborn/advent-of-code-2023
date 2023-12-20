@@ -177,23 +177,23 @@ public class Condition(
     if (unfold)
     {
       springs = [
-        ..springs,
+        .. springs,
         SpringCondition.Unknown,
-        ..springs,
+        .. springs,
         SpringCondition.Unknown,
-        ..springs,
+        .. springs,
         SpringCondition.Unknown,
-        ..springs,
+        .. springs,
         SpringCondition.Unknown,
-        ..springs,
+        .. springs,
       ];
 
       contiguousGroupSizes = [
-        ..contiguousGroupSizes,
-        ..contiguousGroupSizes,
-        ..contiguousGroupSizes,
-        ..contiguousGroupSizes,
-        ..contiguousGroupSizes,
+        .. contiguousGroupSizes,
+        .. contiguousGroupSizes,
+        .. contiguousGroupSizes,
+        .. contiguousGroupSizes,
+        .. contiguousGroupSizes,
       ];
     }
 
