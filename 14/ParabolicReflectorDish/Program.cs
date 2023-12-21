@@ -47,27 +47,42 @@ public class Dish(
 
   private List<List<char>> TiltDishToNorth(List<List<char>> rows)
   {
+    // create a copy of the rows which we can modify
     var modifiedRows = rows.ToList();
     var numOfColumns = modifiedRows[0].Count;
     var numOfRows = modifiedRows.Count;
 
+    // iterate over the columns from left to right
     for (var currentColumnIndex = 0; currentColumnIndex < numOfColumns; currentColumnIndex++)
     {
+      // iterate over the rows from top to bottom
       for (var currentRowIndex = 0; currentRowIndex < numOfRows; currentRowIndex++)
       {
+        // get the current symbol
         var current = modifiedRows[currentRowIndex][currentColumnIndex];
 
+        // if the current symbol is an empty space
         if (current is EmptySpaceSymbol)
         {
+          // iterate over the rows below the current row
+          // starting from the row after the current row
           for (var i = currentRowIndex + 1; i < numOfRows; i++)
           {
+            // get the next symbol in the current column
             var next = modifiedRows[i][currentColumnIndex];
 
+            // if the next symbol is a square rock
+            // we can stop iterating over the rows below
+            // because the square rock blocks moving
+            // any round rock to fill the empty space
             if (next is SquareRockSymbol)
             {
               break;
             }
 
+            // if the next symbol is a round rock
+            // we can move the round rock to the empty space
+            // and stop iterating over the rows below
             if (next is RoundRockSymbol)
             {
               modifiedRows[currentRowIndex][currentColumnIndex] = RoundRockSymbol;
