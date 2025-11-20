@@ -18,21 +18,30 @@ public class Program
       return -2;
     }
 
+    var isPart2 = args.Length > 1 && args[1] == "part2";
     var input = await File.ReadAllTextAsync(args[0]);
 
     var stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    var result = LaunchSequence
-      .Parse(input)
-      .Steps
-      .Sum(step => step.HashLabel());
+
+    var sequence = LaunchSequence.Parse(input, isPart2);
+    var result = isPart2
+      ? sequence.Initialize()
+      : sequence.Steps.Sum(step => step.LabelHash);
 
     stopwatch.Stop();
 
-    Console.WriteLine($"The total is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    if (isPart2)
+    {
+      Console.WriteLine($"The focusing power is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    }
+    else
+    {
+      Console.WriteLine($"The total is {result}. ({stopwatch.ElapsedMilliseconds}ms)");
+    }
 
-    return result;
+    return (int)result;
   }
 }
 
@@ -44,6 +53,9 @@ public class LaunchSequence(
 
   public long Initialize()
   {
+    // each box is numbered
+    // each box can contain lenses
+    // a lense has a label and a focal length
     var boxes = new Dictionary<int, Dictionary<string, int>>();
 
     foreach (var num in Enumerable.Range(0, 255))
@@ -51,7 +63,53 @@ public class LaunchSequence(
       boxes.Add(num, []);
     }
 
-    return 0;
+    foreach (var step in Steps)
+    {
+      var box = boxes[step.LabelHash];
+
+      switch (step.Operation)
+      {
+        case Operation.Removal:
+          {
+            box.Remove(step.Label);
+            break;
+          }
+        case Operation.Insertion:
+          {
+            if (step.LensFocalLength.HasValue)
+            {
+              if (box.ContainsKey(step.Label))
+              {
+                box[step.Label] = step.LensFocalLength.Value;
+              }
+              else
+              {
+                box.Add(step.Label, step.LensFocalLength.Value);
+              }
+            }
+            break;
+          }
+        default:
+          throw new ArgumentException("Invalid operation.", nameof(step.Operation));
+      }
+    }
+
+    var total = 0L;
+
+    foreach (var box in boxes)
+    {
+      var boxNumber = box.Key + 1;
+      var lenses = box.Value;
+
+      for (var i = 0; i < lenses.Count; i++)
+      {
+        var lensNumber = i + 1;
+        var focalLength = box.Value.ElementAt(i).Value;
+        total += boxNumber * lensNumber * focalLength;
+      }
+    }
+
+    return total;
   }
 
   public static LaunchSequence Parse(string input, bool part2 = false)
@@ -77,16 +135,14 @@ public class Step(
   public string Label { get; init; } = label;
   public Operation Operation { get; init; } = operation;
   public int? LensFocalLength { get; init; } = lensFocalLength;
-
-  public int HashLabel() => Label
-    .Aggregate(0, (hash, character) =>
-    {
-      var ascii = (int)character;
-      hash += ascii;
-      hash *= 17;
-      hash %= 256;
-      return hash;
-    });
+  public int LabelHash => Label.Aggregate(0, (hash, character) =>
+  {
+    var ascii = (int)character;
+    hash += ascii;
+    hash *= 17;
+    hash %= 256;
+    return hash;
+  });
 
   public static Step Parse(string input, bool part2 = false)
   {
